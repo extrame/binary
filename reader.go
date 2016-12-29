@@ -1,4 +1,4 @@
-package binary
+package bireader
 
 import (
 	"encoding/binary"
@@ -67,6 +67,12 @@ func (e *endian) ReadInt(r io.Reader) (int, error) {
 	return c, err
 }
 
+func (e *endian) ReadFloat32(r io.Reader) (float32, error) {
+	var c float32
+	err := binary.Read(r, e, &c)
+	return c, err
+}
+
 func (e *endian) ReadInt64(r io.Reader) (int64, error) {
 	var c int64
 	err := binary.Read(r, e, &c)
@@ -91,6 +97,24 @@ func (e *endian) ReadStringWithLength(r io.Reader, length int) (string, error) {
 	b := make([]byte, length)
 	err := binary.Read(r, e, &b)
 	return string(b), err
+}
+
+func (e *endian) ReadFloat32ArrayWithLength(r io.Reader, length int) ([]float32, error) {
+	b := make([]float32, length)
+	err := binary.Read(r, e, &b)
+	return b, err
+}
+
+func (e *endian) ReadInt32ArrayWithLength(r io.Reader, length int) ([]int32, error) {
+	b := make([]int32, length)
+	err := binary.Read(r, e, &b)
+	return b, err
+}
+
+func (e *endian) ReadUint8ArrayWithLength(r io.Reader, length int) ([]uint8, error) {
+	b := make([]uint8, length)
+	err := binary.Read(r, e, &b)
+	return b, err
 }
 
 func (e *endian) ReadByte(r io.Reader) (byte, error) {
